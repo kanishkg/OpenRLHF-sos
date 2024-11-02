@@ -108,6 +108,8 @@ def create_vllm_engines(
                 dtype="bfloat16",
                 seed=seed + i,
                 enable_prefix_caching=enable_prefix_caching,
+                swap_space=64,
+                max_num_seqs=32,
                 max_model_len=max_model_len,
             )
         )
