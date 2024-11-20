@@ -6,7 +6,6 @@ import torch.nn as nn
 from peft import LoraConfig, get_peft_model
 from peft.tuners.lora import LoraLayer
 from transformers import AutoConfig, AutoModel, BitsAndBytesConfig
-from transformers.deepspeed import HfDeepSpeedConfig
 from transformers.dynamic_module_utils import get_class_from_dynamic_module
 
 from openrlhf.utils.logging_utils import init_logger
@@ -98,10 +97,10 @@ def get_llm_for_sequence_regression(
 
     # Note: dschf is defined in function scope to avoid global effects
     # https://huggingface.co/docs/transformers/main_classes/deepspeed#nontrainer-deepspeed-integration
-    if ds_config is not None and ds_config["zero_optimization"]["stage"] == 3:
-        dschf = HfDeepSpeedConfig(ds_config)
-    else:
-        dschf = None
+    # if ds_config is not None and ds_config["zero_optimization"]["stage"] == 3:
+    #     dschf = HfDeepSpeedConfig(ds_config)
+    # else:
+    dschf = None
 
     if load_in_4bit:
         assert bf16, "we only support bnb_4bit_compute_dtype = bf16"
